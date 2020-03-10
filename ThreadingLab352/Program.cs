@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -32,6 +33,10 @@ namespace ThreadingLab352
             List<Thread> threads = new List<Thread>();
             List<FindPiThread> ThreadObjects = new List<FindPiThread>();
 
+            //Creates and starts a stopwatch before calculations start.
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             //Loop to set up threads and start them.
             for(int i = 0; i < NumThreads; i++)
             {
@@ -56,10 +61,12 @@ namespace ThreadingLab352
                 DartsLanded = DartsLanded + item.getDartsOnBoard();
             }
 
-            //calculates Pi estimate based on results.
+            //calculates Pi estimate based on results, then stop the watch.
             double PiEstimate = 4 * ((double)DartsLanded / ((double)ThreadDarts * (double)NumThreads));
+            watch.Stop();
 
             Console.WriteLine($"The estimation of pi based on the results is: {PiEstimate}.");
+            Console.WriteLine($"The elapsed time for calculation was {(double)watch.ElapsedMilliseconds / 1000} seconds.");
             Console.Read();
         }
 
